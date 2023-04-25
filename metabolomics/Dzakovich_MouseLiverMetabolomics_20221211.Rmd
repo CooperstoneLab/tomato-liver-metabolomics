@@ -1,7 +1,7 @@
 ---
 title: "Tomato-fed mouse liver metabolomics data analysis"
 author: "Michael Dzakovich, Jessica Cooperstone"
-date: "So many times"
+date: "So many times, published in 2023"
 output: 
   html_document:
     highlight: kate
@@ -16,45 +16,44 @@ editor_options:
 
 # Introduction
 
-Title: Transcriptomics and Metabolomics Reveal Liver Metabolic Changes and Phytochemical Deposition Occurring with Tomato Consumption in Mice
+Title: Transcriptomics and Metabolomics Reveal Tomato Consumption Alters Hepatic Xenobiotic Metabolism and Induces Steroidal Alkaloid Metabolite Accumulation in Mice
 
 Authors: Michael P. Dzakovich1,2, Mallory L. Goggans1, Jennifer M. Thomas-Ahner3, Nancy Engelmann Moran2, Steven K. Clinton3, David M. Francis4, Jessica L. Cooperstone1,5
 
-Affiliations:  
-1 The Ohio State University, Department of Horticulture and Crop Science, 2001 Fyffe Court, Columbus, OH 43210.  
+Affiliations:\
+1 The Ohio State University, Department of Horticulture and Crop Science, 2001 Fyffe Court, Columbus, OH 43210.
 
-2 USDA-ARS Children’s Nutrition Research Center, Department of Pediatrics, Baylor College of Medicine, 1100 Bates Ave., Houston, TX 77030  
+2 USDA-ARS Children's Nutrition Research Center, Department of Pediatrics, Baylor College of Medicine, 1100 Bates Ave., Houston, TX 77030
 
-3 The Ohio State University, Division of Medical Oncology, Department of Internal Medicine   
+3 The Ohio State University, Division of Medical Oncology, Department of Internal Medicine
 
-4 The Ohio State University, Ohio Agricultural Research and Development Center, Department of Horticulture and Crop Science, 1680 Madison Ave, Wooster, OH 44691.  
+4 The Ohio State University, Ohio Agricultural Research and Development Center, Department of Horticulture and Crop Science, 1680 Madison Ave, Wooster, OH 44691.
 
 5 The Ohio State University, Department of Food Science and Technology, 2015 Fyffe Court, Columbus, OH 43210.
 
-Corresponding author: 
-Jessica Cooperstone, PhD
+Corresponding author: Jessica Cooperstone, PhD
 
-2001 Fyffe Court 
+2001 Fyffe Court
 
 Columbus, OH 43210
 
-Cooperstone.1@osu.edu
+[Cooperstone.1\@osu.edu](mailto:Cooperstone.1@osu.edu){.email}
 
 Keywords: liver, steroidal alkaloids, tomato, xenobiotic metabolism, multi-omic integration
 
-DOI: ADD BIORXIV WHEN PREPRINTED, THEN PAPER LATER.
+DOI: https://doi.org/10.1101/2023.04.18.536606
 
 Abstract
 
-**Scope:** Tomato consumption is associated with many health benefits including lowered risk for developing certain cancers. It is hypothesized that after dietary absorption, tomato phytochemicals are transported to the liver and alter gene expression in ways that lead to favorable health outcomes. However, the effects of tomato consumption on gene expression and the chemical profile of mammalian liver are not well defined. 
+**Scope:** Tomato consumption is associated with many health benefits including lowered risk for developing certain cancers. It is hypothesized that tomato phytochemicals are transported to the liver and other tissues where they alter gene expression in ways that lead to favorable health outcomes. However, the effects of tomato consumption on mammalian liver gene expression and chemical profile are not well defined.
 
-**Methods and results:** We hypothesized that tomato consumption would differentially alter mouse liver transcriptomes and metabolomes compared to a control diet. C57BL/6 mice (n=11-12/group) were fed a macronutrient matched diet containing either 10% red tomato, 10% tangerine tomato, or no tomato powder for 6 weeks after weaning. RNA-Seq followed by gene set enrichment analyses indicated that tomato type and consumption, in general, altered expression of phase I and II xenobiotic metabolizing genes. Untargeted metabolomics experiments revealed distinct clustering between control and tomato fed animals. Seventy-five significantly different features (representing 19 different chemical formulas) were identified or tentatively identified as steroidal alkaloids and their phase I and II metabolites; many of which are reported for the first time in mammals. 
+**Methods and results:** We hypothesized that tomato consumption would alter mouse liver transcriptomes and metabolomes compared to a control diet. C57BL/6 mice (n=11-12/group) were fed a macronutrient matched diet containing either 10% red tomato, 10% tangerine tomato, or no tomato powder for 6 weeks after weaning. RNA-Seq followed by gene set enrichment analyses indicated that tomato type and consumption, in general, altered expression of phase I and II xenobiotic metabolism genes. Untargeted metabolomics experiments revealed distinct clustering between control and tomato fed animals. Nineteen molecular formulas (representing 75 chemical features) were identified or tentatively identified as steroidal alkaloids and isomers of their phase I and II metabolites; many of which are reported for the first time in mammals.
 
-**Conclusion:** These data together suggest tomato consumption may impart benefits through their ability to upregulate xenobiotic metabolizing enzymes, enhancing detoxification potential. 
+**Conclusion:** These data together suggest tomato consumption may impart benefits partly through enhancing detoxification potential.
 
-Metabolomics data was collected on an Agilent 1290 interfaced with a 6545 QTOF-MS on 10/23/2019. Raw data is reposited with MetaboLights as study [MTBLS6715]().
+Metabolomics data was collected on an Agilent 1290 interfaced with a 6545 QTOF-MS on 10/23/2019. Raw data is reposited with MetaboLights as study MTBLS6715.
 
-Raw data was deconvoluted using Agilent Profinder, and parameters can be found in Supplementary Table 11.
+Raw data was deconvoluted using Agilent Profinder, and parameters can be found in Supplementary Table 12.
 
 ### Load libraries
 ```{r, warning = FALSE, message = FALSE}
@@ -74,10 +73,8 @@ library(htmlwidgets) # for saving interactive plots
 Metabolomics data is in Supplemental Table 12. Samples (i.e. mice) are in rows and variables are in columns. `ID` is mouse ID, `Class` is the diet administered (control AIN93G, or AIN93G supplement with 10% w/w tangerine tomato powder, or AIN93G supplemented with 10% w/w red tomato powder), and each additional column is a neutral monoisotopic mass and retention time.
 
 Data have been filtered to only include features which are present in all 7 of our 7 QC samples. Filtered and log2 transformed data can be found in Supplemenary Table 13.
-
-CONVERT TO SUPPLEMENTAL FILE
 ```{r}
-Data <- read_excel("/Users/jessicacooperstone/OneDrive - The Ohio State University/BuckeyeBox Data/JLC_Files/OSU/research/personnel/michael dzakovich/liver metabolomics/MouseManuscript/20221103_Draft4/20221103_SupplementalTables.xlsx",
+Data <- read_excel("/Users/jessicacooperstone/supplemental-tables.xlsx",
                    sheet = "Sup. Table 12")
 
 Data[1:10,1:10]
@@ -218,8 +215,6 @@ sum(NAbyColumn_QC) #no
 ### Removing samples with lots of missingness
 
 ```{r}
-#~~Just something to think about because I know you'll forget but maybe the issue with retaining some features that actually don't have that many non-NA values is because we're counting QCs as part of our data so we're artificially adding 7 counts to a feature that might have had just 1 data point. 
-
 # calculate how many NAs there are per feature
 contains_NAs <- Data_noQC %>%
   pivot_longer(cols = 3:ncol(.),

@@ -1,7 +1,7 @@
 Tomato-fed mouse liver metabolomics data analysis
 ================
 Michael Dzakovich, Jessica Cooperstone
-So many times, probably published in 2023
+So many times, published in 2023
 
 - <a href="#introduction" id="toc-introduction">Introduction</a>
   - <a href="#load-libraries" id="toc-load-libraries">Load libraries</a>
@@ -58,8 +58,9 @@ So many times, probably published in 2023
 
 # Introduction
 
-Title: Transcriptomics and Metabolomics Reveal Liver Metabolic Changes
-and Phytochemical Deposition Occurring with Tomato Consumption in Mice
+Title: Transcriptomics and Metabolomics Reveal Tomato Consumption Alters
+Hepatic Xenobiotic Metabolism and Induces Steroidal Alkaloid Metabolite
+Accumulation in Mice
 
 Authors: Michael P. Dzakovich1,2, Mallory L. Goggans1, Jennifer M.
 Thomas-Ahner3, Nancy Engelmann Moran2, Steven K. Clinton3, David M.
@@ -94,42 +95,40 @@ Columbus, OH 43210
 Keywords: liver, steroidal alkaloids, tomato, xenobiotic metabolism,
 multi-omic integration
 
-DOI: ADD BIORXIV WHEN PREPRINTED, THEN PAPER LATER.
+DOI: <https://doi.org/10.1101/2023.04.18.536606>
 
 Abstract
 
 **Scope:** Tomato consumption is associated with many health benefits
 including lowered risk for developing certain cancers. It is
-hypothesized that after dietary absorption, tomato phytochemicals are
-transported to the liver and alter gene expression in ways that lead to
+hypothesized that tomato phytochemicals are transported to the liver and
+other tissues where they alter gene expression in ways that lead to
 favorable health outcomes. However, the effects of tomato consumption on
-gene expression and the chemical profile of mammalian liver are not well
+mammalian liver gene expression and chemical profile are not well
 defined.
 
 **Methods and results:** We hypothesized that tomato consumption would
-differentially alter mouse liver transcriptomes and metabolomes compared
-to a control diet. C57BL/6 mice (n=11-12/group) were fed a macronutrient
-matched diet containing either 10% red tomato, 10% tangerine tomato, or
-no tomato powder for 6 weeks after weaning. RNA-Seq followed by gene set
+alter mouse liver transcriptomes and metabolomes compared to a control
+diet. C57BL/6 mice (n=11-12/group) were fed a macronutrient matched diet
+containing either 10% red tomato, 10% tangerine tomato, or no tomato
+powder for 6 weeks after weaning. RNA-Seq followed by gene set
 enrichment analyses indicated that tomato type and consumption, in
-general, altered expression of phase I and II xenobiotic metabolizing
+general, altered expression of phase I and II xenobiotic metabolism
 genes. Untargeted metabolomics experiments revealed distinct clustering
-between control and tomato fed animals. Seventy-five significantly
-different features (representing 19 different chemical formulas) were
-identified or tentatively identified as steroidal alkaloids and their
-phase I and II metabolites; many of which are reported for the first
-time in mammals.
+between control and tomato fed animals. Nineteen molecular formulas
+(representing 75 chemical features) were identified or tentatively
+identified as steroidal alkaloids and isomers of their phase I and II
+metabolites; many of which are reported for the first time in mammals.
 
 **Conclusion:** These data together suggest tomato consumption may
-impart benefits through their ability to upregulate xenobiotic
-metabolizing enzymes, enhancing detoxification potential.
+impart benefits partly through enhancing detoxification potential.
 
 Metabolomics data was collected on an Agilent 1290 interfaced with a
 6545 QTOF-MS on 10/23/2019. Raw data is reposited with MetaboLights as
-study [MTBLS6715]().
+study MTBLS6715.
 
 Raw data was deconvoluted using Agilent Profinder, and parameters can be
-found in Supplementary Table 11.
+found in Supplementary Table 12.
 
 ### Load libraries
 
@@ -158,31 +157,28 @@ Data have been filtered to only include features which are present in
 all 7 of our 7 QC samples. Filtered and log2 transformed data can be
 found in Supplemenary Table 13.
 
-CONVERT TO SUPPLEMENTAL FILE
-
 ``` r
-Data <- read_excel("/Users/jessicacooperstone/OneDrive - The Ohio State University/BuckeyeBox Data/JLC_Files/OSU/research/personnel/michael dzakovich/liver metabolomics/MouseManuscript/20221103_Draft4/20221103_SupplementalTables.xlsx",
+Data <- read_excel("/Users/jessicacooperstone/supplemental-tables.xlsx",
                    sheet = "Sup. Table 12")
 
 Data[1:10,1:10]
 ```
 
     ## # A tibble: 10 × 10
-    ##    ID      Class 441.2…¹ 444.9…² 297.2…³ 330.2…⁴ 494.1…⁵ 908.6…⁶ 590.2…⁷ 619.4…⁸
-    ##    <chr>   <chr>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ##  1 NM_15_… Cont…      NA   32081  113826  300218   15170   25427   72309      NA
-    ##  2 NM_15_… Cont…      NA   40234  155800  206286   32004   38040   72557      NA
-    ##  3 NM_15_… Tang…   37736   25140  167965  213363   11983   60761  102500      NA
-    ##  4 NM_15_… Red     25494   15417  116790  249033   17370  338773   70946   12172
-    ##  5 NM_15_… Cont…      NA      NA   92680  191925   13620   41520   63190      NA
-    ##  6 NM_15_… Cont…      NA      NA   90718  268946    9628   30450   56281   21812
-    ##  7 NM_15_… Red     10042    7990  109544  269707   25663   12596   82510      NA
-    ##  8 NM_15_… Red     10959    4056  143737  237576   24479   20365   83603   10832
-    ##  9 NM_15_… Cont…      NA   23125  159213  312619   26585   37303   81987      NA
-    ## 10 NM_15_… Tang…   45393      NA  160132   94071   19097   41546   95407      NA
-    ## # … with abbreviated variable names ¹​`441.287_4.83`, ²​`444.9379_1.2`,
-    ## #   ³​`297.2663_7.29`, ⁴​`330.2383_6.45`, ⁵​`494.185_5.18`, ⁶​`908.6393_10.8`,
-    ## #   ⁷​`590.258_8.82`, ⁸​`619.4268_8.78`
+    ##    ID        Class `441.287_4.83` `444.9379_1.2` `297.2663_7.29` `330.2383_6.45`
+    ##    <chr>     <chr>          <dbl>          <dbl>           <dbl>           <dbl>
+    ##  1 NM_15_120 Cont…             NA          32081          113826          300218
+    ##  2 NM_15_122 Cont…             NA          40234          155800          206286
+    ##  3 NM_15_128 Tang…          37736          25140          167965          213363
+    ##  4 NM_15_133 Red            25494          15417          116790          249033
+    ##  5 NM_15_136 Cont…             NA             NA           92680          191925
+    ##  6 NM_15_137 Cont…             NA             NA           90718          268946
+    ##  7 NM_15_156 Red            10042           7990          109544          269707
+    ##  8 NM_15_157 Red            10959           4056          143737          237576
+    ##  9 NM_15_159 Cont…             NA          23125          159213          312619
+    ## 10 NM_15_160 Tang…          45393             NA          160132           94071
+    ## # ℹ 4 more variables: `494.185_5.18` <dbl>, `908.6393_10.8` <dbl>,
+    ## #   `590.258_8.82` <dbl>, `619.4268_8.78` <dbl>
 
 ### Data summaries
 
@@ -367,8 +363,6 @@ sum(NAbyColumn_QC) #no
 ### Removing samples with lots of missingness
 
 ``` r
-#~~Just something to think about because I know you'll forget but maybe the issue with retaining some features that actually don't have that many non-NA values is because we're counting QCs as part of our data so we're artificially adding 7 counts to a feature that might have had just 1 data point. 
-
 # calculate how many NAs there are per feature
 contains_NAs <- Data_noQC %>%
   pivot_longer(cols = 3:ncol(.),
@@ -398,6 +392,8 @@ NAs_by_Class <- Data_noQC %>%
     ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
     ## 
     ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
 ``` r
 # 24 is total n (35) minus 11 (smallest group)
@@ -487,7 +483,7 @@ Data_filtered_tidy %>%
        y = "Relative abundance")
 ```
 
-    ## Warning: Removed 3116 rows containing non-finite values (stat_boxplot).
+    ## Warning: Removed 3116 rows containing non-finite values (`stat_boxplot()`).
 
 ![](Dzakovich_MouseLiverMetabolomics_20221211_githubdoc_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
@@ -1022,7 +1018,7 @@ Which mouse is in which cluster?
 liver_pos_kmeans_3$cluster # grab the cluster classification from the kmeans object
 ```
 
-    ##  [1] 1 3 1 1 3 3 3 3 3 3 3 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ##  [1] 2 3 2 2 3 3 3 3 3 3 3 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 
 ``` r
 # Add the cluster group to the parent datafile
@@ -1039,10 +1035,10 @@ knitr::kable(PC_coord_noQC_Tomato_withclust[1:35, 1:7])
 
 | ID        | Class     | Tomato  | kmeans_controlredtang |      Dim.1 |      Dim.2 |       Dim.3 |
 |:----------|:----------|:--------|----------------------:|-----------:|-----------:|------------:|
-| NM_15_120 | Control   | Control |                     1 | -106.69123 | -63.950604 |  54.8563452 |
+| NM_15_120 | Control   | Control |                     2 | -106.69123 | -63.950604 |  54.8563452 |
 | NM_15_122 | Control   | Control |                     3 |  -83.26293 |  27.295606 |  59.3606851 |
-| NM_15_136 | Control   | Control |                     1 | -102.86240 | -15.666217 | -22.0925074 |
-| NM_15_137 | Control   | Control |                     1 | -124.00761 | -88.237037 | -79.5864276 |
+| NM_15_136 | Control   | Control |                     2 | -102.86240 | -15.666217 | -22.0925074 |
+| NM_15_137 | Control   | Control |                     2 | -124.00761 | -88.237037 | -79.5864276 |
 | NM_15_159 | Control   | Control |                     3 |  -76.63817 |  43.367786 | -13.9779652 |
 | NM_15_182 | Control   | Control |                     3 |  -79.22179 |  22.654052 |  50.0381868 |
 | NM_15_183 | Control   | Control |                     3 |  -79.66365 |  61.281011 |   9.1656935 |
@@ -1050,30 +1046,30 @@ knitr::kable(PC_coord_noQC_Tomato_withclust[1:35, 1:7])
 | NM_15_189 | Control   | Control |                     3 |  -81.26408 |  46.562943 | -16.0139043 |
 | NM_15_208 | Control   | Control |                     3 |  -82.40790 |  53.817188 | -52.0968788 |
 | NM_15_240 | Control   | Control |                     3 |  -74.47243 |  58.888206 |  -1.1349561 |
-| NM_15_245 | Control   | Control |                     1 | -109.39649 | -73.658139 |  15.3981372 |
-| NM_15_133 | Red       | Tomato  |                     2 |   55.06492 |  -2.200242 | -45.8084880 |
-| NM_15_156 | Red       | Tomato  |                     2 |   52.65783 |  -4.410859 | -27.5927524 |
-| NM_15_157 | Red       | Tomato  |                     2 |   31.09156 | -83.068239 | -39.0932026 |
-| NM_15_166 | Red       | Tomato  |                     2 |   50.78199 |   7.554109 | -14.4699484 |
-| NM_15_170 | Red       | Tomato  |                     2 |   52.98875 |   5.073934 | -17.8379015 |
-| NM_15_175 | Red       | Tomato  |                     2 |   51.72179 |   2.952307 |  20.9108326 |
-| NM_15_177 | Red       | Tomato  |                     2 |   51.71825 |  11.324129 |  29.2692077 |
-| NM_15_199 | Red       | Tomato  |                     2 |   55.71324 |  17.367036 |  -1.0071316 |
-| NM_15_202 | Red       | Tomato  |                     2 |   58.46517 |  16.763677 |  20.9763556 |
-| NM_15_203 | Red       | Tomato  |                     2 |   56.74781 |  18.370540 |  -0.8519130 |
-| NM_15_204 | Red       | Tomato  |                     2 |   58.60025 |  21.693585 |  15.1095420 |
-| NM_15_128 | Tangerine | Tomato  |                     2 |   46.05249 |  -5.339775 | -20.6482830 |
-| NM_15_160 | Tangerine | Tomato  |                     2 |   40.18605 | -22.694797 | -65.3355496 |
-| NM_15_192 | Tangerine | Tomato  |                     2 |   49.82164 |  -8.853585 |  23.3586725 |
-| NM_15_195 | Tangerine | Tomato  |                     2 |   45.00976 |  11.348312 |  13.2339097 |
-| NM_15_197 | Tangerine | Tomato  |                     2 |   48.00648 |   3.716988 |  11.6602536 |
-| NM_15_198 | Tangerine | Tomato  |                     2 |   52.86770 |   9.018991 |   2.9613740 |
-| NM_15_215 | Tangerine | Tomato  |                     2 |   19.10693 | -97.021529 |  69.7214376 |
-| NM_15_216 | Tangerine | Tomato  |                     2 |   49.99457 |  10.970353 |  -4.1233865 |
-| NM_15_217 | Tangerine | Tomato  |                     2 |   32.56782 | -38.181572 |  31.2699018 |
-| NM_15_225 | Tangerine | Tomato  |                     2 |   49.81869 |  16.218783 |  14.7261967 |
-| NM_15_226 | Tangerine | Tomato  |                     2 |   41.61857 |   3.378630 | -24.2685280 |
-| NM_15_242 | Tangerine | Tomato  |                     2 |   30.29431 |  -4.608642 |   0.9042711 |
+| NM_15_245 | Control   | Control |                     2 | -109.39649 | -73.658139 |  15.3981372 |
+| NM_15_133 | Red       | Tomato  |                     1 |   55.06492 |  -2.200242 | -45.8084880 |
+| NM_15_156 | Red       | Tomato  |                     1 |   52.65783 |  -4.410859 | -27.5927524 |
+| NM_15_157 | Red       | Tomato  |                     1 |   31.09156 | -83.068239 | -39.0932026 |
+| NM_15_166 | Red       | Tomato  |                     1 |   50.78199 |   7.554109 | -14.4699484 |
+| NM_15_170 | Red       | Tomato  |                     1 |   52.98875 |   5.073934 | -17.8379015 |
+| NM_15_175 | Red       | Tomato  |                     1 |   51.72179 |   2.952307 |  20.9108326 |
+| NM_15_177 | Red       | Tomato  |                     1 |   51.71825 |  11.324129 |  29.2692077 |
+| NM_15_199 | Red       | Tomato  |                     1 |   55.71324 |  17.367036 |  -1.0071316 |
+| NM_15_202 | Red       | Tomato  |                     1 |   58.46517 |  16.763677 |  20.9763556 |
+| NM_15_203 | Red       | Tomato  |                     1 |   56.74781 |  18.370540 |  -0.8519130 |
+| NM_15_204 | Red       | Tomato  |                     1 |   58.60025 |  21.693585 |  15.1095420 |
+| NM_15_128 | Tangerine | Tomato  |                     1 |   46.05249 |  -5.339775 | -20.6482830 |
+| NM_15_160 | Tangerine | Tomato  |                     1 |   40.18605 | -22.694797 | -65.3355496 |
+| NM_15_192 | Tangerine | Tomato  |                     1 |   49.82164 |  -8.853585 |  23.3586725 |
+| NM_15_195 | Tangerine | Tomato  |                     1 |   45.00976 |  11.348312 |  13.2339097 |
+| NM_15_197 | Tangerine | Tomato  |                     1 |   48.00648 |   3.716988 |  11.6602536 |
+| NM_15_198 | Tangerine | Tomato  |                     1 |   52.86770 |   9.018991 |   2.9613740 |
+| NM_15_215 | Tangerine | Tomato  |                     1 |   19.10693 | -97.021529 |  69.7214376 |
+| NM_15_216 | Tangerine | Tomato  |                     1 |   49.99457 |  10.970353 |  -4.1233865 |
+| NM_15_217 | Tangerine | Tomato  |                     1 |   32.56782 | -38.181572 |  31.2699018 |
+| NM_15_225 | Tangerine | Tomato  |                     1 |   49.81869 |  16.218783 |  14.7261967 |
+| NM_15_226 | Tangerine | Tomato  |                     1 |   41.61857 |   3.378630 | -24.2685280 |
+| NM_15_242 | Tangerine | Tomato  |                     1 |   30.29431 |  -4.608642 |   0.9042711 |
 
 ### Control vs tomato, for k = 2 clusters
 
@@ -1119,10 +1115,10 @@ knitr::kable(PC_coord_noQC_Tomato_withclust[1:35, 1:7])
 
 | ID        | Class     | Tomato  | kmeans_controlredtang | kmeans_controltomato |      Dim.1 |      Dim.2 |
 |:----------|:----------|:--------|----------------------:|---------------------:|-----------:|-----------:|
-| NM_15_120 | Control   | Control |                     1 |                    1 | -106.69123 | -63.950604 |
+| NM_15_120 | Control   | Control |                     2 |                    1 | -106.69123 | -63.950604 |
 | NM_15_122 | Control   | Control |                     3 |                    1 |  -83.26293 |  27.295606 |
-| NM_15_136 | Control   | Control |                     1 |                    1 | -102.86240 | -15.666217 |
-| NM_15_137 | Control   | Control |                     1 |                    1 | -124.00761 | -88.237037 |
+| NM_15_136 | Control   | Control |                     2 |                    1 | -102.86240 | -15.666217 |
+| NM_15_137 | Control   | Control |                     2 |                    1 | -124.00761 | -88.237037 |
 | NM_15_159 | Control   | Control |                     3 |                    1 |  -76.63817 |  43.367786 |
 | NM_15_182 | Control   | Control |                     3 |                    1 |  -79.22179 |  22.654052 |
 | NM_15_183 | Control   | Control |                     3 |                    1 |  -79.66365 |  61.281011 |
@@ -1130,30 +1126,30 @@ knitr::kable(PC_coord_noQC_Tomato_withclust[1:35, 1:7])
 | NM_15_189 | Control   | Control |                     3 |                    1 |  -81.26408 |  46.562943 |
 | NM_15_208 | Control   | Control |                     3 |                    1 |  -82.40790 |  53.817188 |
 | NM_15_240 | Control   | Control |                     3 |                    1 |  -74.47243 |  58.888206 |
-| NM_15_245 | Control   | Control |                     1 |                    1 | -109.39649 | -73.658139 |
-| NM_15_133 | Red       | Tomato  |                     2 |                    2 |   55.06492 |  -2.200242 |
-| NM_15_156 | Red       | Tomato  |                     2 |                    2 |   52.65783 |  -4.410859 |
-| NM_15_157 | Red       | Tomato  |                     2 |                    2 |   31.09156 | -83.068239 |
-| NM_15_166 | Red       | Tomato  |                     2 |                    2 |   50.78199 |   7.554109 |
-| NM_15_170 | Red       | Tomato  |                     2 |                    2 |   52.98875 |   5.073934 |
-| NM_15_175 | Red       | Tomato  |                     2 |                    2 |   51.72179 |   2.952307 |
-| NM_15_177 | Red       | Tomato  |                     2 |                    2 |   51.71825 |  11.324129 |
-| NM_15_199 | Red       | Tomato  |                     2 |                    2 |   55.71324 |  17.367036 |
-| NM_15_202 | Red       | Tomato  |                     2 |                    2 |   58.46517 |  16.763677 |
-| NM_15_203 | Red       | Tomato  |                     2 |                    2 |   56.74781 |  18.370540 |
-| NM_15_204 | Red       | Tomato  |                     2 |                    2 |   58.60025 |  21.693585 |
-| NM_15_128 | Tangerine | Tomato  |                     2 |                    2 |   46.05249 |  -5.339775 |
-| NM_15_160 | Tangerine | Tomato  |                     2 |                    2 |   40.18605 | -22.694797 |
-| NM_15_192 | Tangerine | Tomato  |                     2 |                    2 |   49.82164 |  -8.853585 |
-| NM_15_195 | Tangerine | Tomato  |                     2 |                    2 |   45.00976 |  11.348312 |
-| NM_15_197 | Tangerine | Tomato  |                     2 |                    2 |   48.00648 |   3.716988 |
-| NM_15_198 | Tangerine | Tomato  |                     2 |                    2 |   52.86770 |   9.018991 |
-| NM_15_215 | Tangerine | Tomato  |                     2 |                    2 |   19.10693 | -97.021529 |
-| NM_15_216 | Tangerine | Tomato  |                     2 |                    2 |   49.99457 |  10.970353 |
-| NM_15_217 | Tangerine | Tomato  |                     2 |                    2 |   32.56782 | -38.181572 |
-| NM_15_225 | Tangerine | Tomato  |                     2 |                    2 |   49.81869 |  16.218783 |
-| NM_15_226 | Tangerine | Tomato  |                     2 |                    2 |   41.61857 |   3.378630 |
-| NM_15_242 | Tangerine | Tomato  |                     2 |                    2 |   30.29431 |  -4.608642 |
+| NM_15_245 | Control   | Control |                     2 |                    1 | -109.39649 | -73.658139 |
+| NM_15_133 | Red       | Tomato  |                     1 |                    2 |   55.06492 |  -2.200242 |
+| NM_15_156 | Red       | Tomato  |                     1 |                    2 |   52.65783 |  -4.410859 |
+| NM_15_157 | Red       | Tomato  |                     1 |                    2 |   31.09156 | -83.068239 |
+| NM_15_166 | Red       | Tomato  |                     1 |                    2 |   50.78199 |   7.554109 |
+| NM_15_170 | Red       | Tomato  |                     1 |                    2 |   52.98875 |   5.073934 |
+| NM_15_175 | Red       | Tomato  |                     1 |                    2 |   51.72179 |   2.952307 |
+| NM_15_177 | Red       | Tomato  |                     1 |                    2 |   51.71825 |  11.324129 |
+| NM_15_199 | Red       | Tomato  |                     1 |                    2 |   55.71324 |  17.367036 |
+| NM_15_202 | Red       | Tomato  |                     1 |                    2 |   58.46517 |  16.763677 |
+| NM_15_203 | Red       | Tomato  |                     1 |                    2 |   56.74781 |  18.370540 |
+| NM_15_204 | Red       | Tomato  |                     1 |                    2 |   58.60025 |  21.693585 |
+| NM_15_128 | Tangerine | Tomato  |                     1 |                    2 |   46.05249 |  -5.339775 |
+| NM_15_160 | Tangerine | Tomato  |                     1 |                    2 |   40.18605 | -22.694797 |
+| NM_15_192 | Tangerine | Tomato  |                     1 |                    2 |   49.82164 |  -8.853585 |
+| NM_15_195 | Tangerine | Tomato  |                     1 |                    2 |   45.00976 |  11.348312 |
+| NM_15_197 | Tangerine | Tomato  |                     1 |                    2 |   48.00648 |   3.716988 |
+| NM_15_198 | Tangerine | Tomato  |                     1 |                    2 |   52.86770 |   9.018991 |
+| NM_15_215 | Tangerine | Tomato  |                     1 |                    2 |   19.10693 | -97.021529 |
+| NM_15_216 | Tangerine | Tomato  |                     1 |                    2 |   49.99457 |  10.970353 |
+| NM_15_217 | Tangerine | Tomato  |                     1 |                    2 |   32.56782 | -38.181572 |
+| NM_15_225 | Tangerine | Tomato  |                     1 |                    2 |   49.81869 |  16.218783 |
+| NM_15_226 | Tangerine | Tomato  |                     1 |                    2 |   41.61857 |   3.378630 |
+| NM_15_242 | Tangerine | Tomato  |                     1 |                    2 |   30.29431 |  -4.608642 |
 
 ### Superimpose on PCAs
 
@@ -1555,11 +1551,6 @@ find the interactive plot as interactive_volcano_plot.html in this repo.
 ``` r
 volcano_plot <- ggplotly(control_v_tomato_volcano, tooltip = "text")
 ```
-
-    ## Warning: `gather_()` was deprecated in tidyr 1.2.0.
-    ## ℹ Please use `gather()` instead.
-    ## ℹ The deprecated feature was likely used in the plotly package.
-    ##   Please report the issue at <]8;;https://github.com/plotly/plotly.R/issueshttps://github.com/plotly/plotly.R/issues]8;;>.
 
 Save
 
