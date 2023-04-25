@@ -464,7 +464,7 @@ PCA_withoutQCs <-  PC_coord_log2 %>%
   scale_fill_manual(values = c("black", "#941100", "#FF9300")) +
   scale_color_manual(values = "black") +  
   theme_minimal() +
-  coord_fixed(PC2_withQC/PC1_withQC) +
+  coord_fixed(PC2_noQC/PC1_noQC) +
   labs(x = glue::glue("PC1: {PC1_noQC}%"),
        y = glue::glue("PC2: {PC2_noQC}%"),
        fill = "Diet",
@@ -502,7 +502,7 @@ Plot manually
   scale_fill_manual(values = c("black", "tomato")) +
   scale_color_manual(values = "black") +  
   theme_minimal() +
-  coord_fixed(PC2_withQC/PC1_withQC) +
+  coord_fixed(PC2_noQC/PC1_noQC) +
   labs(x = glue::glue("PC1: {PC1_noQC}%"),
        y = glue::glue("PC2: {PC2_noQC}%"),
        fill = "Diet",

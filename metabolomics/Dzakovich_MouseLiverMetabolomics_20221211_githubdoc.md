@@ -894,7 +894,7 @@ PCA_withoutQCs <-  PC_coord_log2 %>%
   scale_fill_manual(values = c("black", "#941100", "#FF9300")) +
   scale_color_manual(values = "black") +  
   theme_minimal() +
-  coord_fixed(PC2_withQC/PC1_withQC) +
+  coord_fixed(PC2_noQC/PC1_noQC) +
   labs(x = glue::glue("PC1: {PC1_noQC}%"),
        y = glue::glue("PC2: {PC2_noQC}%"),
        fill = "Diet",
@@ -936,7 +936,7 @@ Plot manually
   scale_fill_manual(values = c("black", "tomato")) +
   scale_color_manual(values = "black") +  
   theme_minimal() +
-  coord_fixed(PC2_withQC/PC1_withQC) +
+  coord_fixed(PC2_noQC/PC1_noQC) +
   labs(x = glue::glue("PC1: {PC1_noQC}%"),
        y = glue::glue("PC2: {PC2_noQC}%"),
        fill = "Diet",
@@ -1018,7 +1018,7 @@ Which mouse is in which cluster?
 liver_pos_kmeans_3$cluster # grab the cluster classification from the kmeans object
 ```
 
-    ##  [1] 2 3 2 2 3 3 3 3 3 3 3 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    ##  [1] 3 1 3 3 1 1 1 1 1 1 1 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 
 ``` r
 # Add the cluster group to the parent datafile
@@ -1035,41 +1035,41 @@ knitr::kable(PC_coord_noQC_Tomato_withclust[1:35, 1:7])
 
 | ID        | Class     | Tomato  | kmeans_controlredtang |      Dim.1 |      Dim.2 |       Dim.3 |
 |:----------|:----------|:--------|----------------------:|-----------:|-----------:|------------:|
-| NM_15_120 | Control   | Control |                     2 | -106.69123 | -63.950604 |  54.8563452 |
-| NM_15_122 | Control   | Control |                     3 |  -83.26293 |  27.295606 |  59.3606851 |
-| NM_15_136 | Control   | Control |                     2 | -102.86240 | -15.666217 | -22.0925074 |
-| NM_15_137 | Control   | Control |                     2 | -124.00761 | -88.237037 | -79.5864276 |
-| NM_15_159 | Control   | Control |                     3 |  -76.63817 |  43.367786 | -13.9779652 |
-| NM_15_182 | Control   | Control |                     3 |  -79.22179 |  22.654052 |  50.0381868 |
-| NM_15_183 | Control   | Control |                     3 |  -79.66365 |  61.281011 |   9.1656935 |
-| NM_15_188 | Control   | Control |                     3 |  -81.00790 |  38.273068 |   3.0187213 |
-| NM_15_189 | Control   | Control |                     3 |  -81.26408 |  46.562943 | -16.0139043 |
-| NM_15_208 | Control   | Control |                     3 |  -82.40790 |  53.817188 | -52.0968788 |
-| NM_15_240 | Control   | Control |                     3 |  -74.47243 |  58.888206 |  -1.1349561 |
-| NM_15_245 | Control   | Control |                     2 | -109.39649 | -73.658139 |  15.3981372 |
-| NM_15_133 | Red       | Tomato  |                     1 |   55.06492 |  -2.200242 | -45.8084880 |
-| NM_15_156 | Red       | Tomato  |                     1 |   52.65783 |  -4.410859 | -27.5927524 |
-| NM_15_157 | Red       | Tomato  |                     1 |   31.09156 | -83.068239 | -39.0932026 |
-| NM_15_166 | Red       | Tomato  |                     1 |   50.78199 |   7.554109 | -14.4699484 |
-| NM_15_170 | Red       | Tomato  |                     1 |   52.98875 |   5.073934 | -17.8379015 |
-| NM_15_175 | Red       | Tomato  |                     1 |   51.72179 |   2.952307 |  20.9108326 |
-| NM_15_177 | Red       | Tomato  |                     1 |   51.71825 |  11.324129 |  29.2692077 |
-| NM_15_199 | Red       | Tomato  |                     1 |   55.71324 |  17.367036 |  -1.0071316 |
-| NM_15_202 | Red       | Tomato  |                     1 |   58.46517 |  16.763677 |  20.9763556 |
-| NM_15_203 | Red       | Tomato  |                     1 |   56.74781 |  18.370540 |  -0.8519130 |
-| NM_15_204 | Red       | Tomato  |                     1 |   58.60025 |  21.693585 |  15.1095420 |
-| NM_15_128 | Tangerine | Tomato  |                     1 |   46.05249 |  -5.339775 | -20.6482830 |
-| NM_15_160 | Tangerine | Tomato  |                     1 |   40.18605 | -22.694797 | -65.3355496 |
-| NM_15_192 | Tangerine | Tomato  |                     1 |   49.82164 |  -8.853585 |  23.3586725 |
-| NM_15_195 | Tangerine | Tomato  |                     1 |   45.00976 |  11.348312 |  13.2339097 |
-| NM_15_197 | Tangerine | Tomato  |                     1 |   48.00648 |   3.716988 |  11.6602536 |
-| NM_15_198 | Tangerine | Tomato  |                     1 |   52.86770 |   9.018991 |   2.9613740 |
-| NM_15_215 | Tangerine | Tomato  |                     1 |   19.10693 | -97.021529 |  69.7214376 |
-| NM_15_216 | Tangerine | Tomato  |                     1 |   49.99457 |  10.970353 |  -4.1233865 |
-| NM_15_217 | Tangerine | Tomato  |                     1 |   32.56782 | -38.181572 |  31.2699018 |
-| NM_15_225 | Tangerine | Tomato  |                     1 |   49.81869 |  16.218783 |  14.7261967 |
-| NM_15_226 | Tangerine | Tomato  |                     1 |   41.61857 |   3.378630 | -24.2685280 |
-| NM_15_242 | Tangerine | Tomato  |                     1 |   30.29431 |  -4.608642 |   0.9042711 |
+| NM_15_120 | Control   | Control |                     3 | -106.69123 | -63.950604 |  54.8563452 |
+| NM_15_122 | Control   | Control |                     1 |  -83.26293 |  27.295606 |  59.3606851 |
+| NM_15_136 | Control   | Control |                     3 | -102.86240 | -15.666217 | -22.0925074 |
+| NM_15_137 | Control   | Control |                     3 | -124.00761 | -88.237037 | -79.5864276 |
+| NM_15_159 | Control   | Control |                     1 |  -76.63817 |  43.367786 | -13.9779652 |
+| NM_15_182 | Control   | Control |                     1 |  -79.22179 |  22.654052 |  50.0381868 |
+| NM_15_183 | Control   | Control |                     1 |  -79.66365 |  61.281011 |   9.1656935 |
+| NM_15_188 | Control   | Control |                     1 |  -81.00790 |  38.273068 |   3.0187213 |
+| NM_15_189 | Control   | Control |                     1 |  -81.26408 |  46.562943 | -16.0139043 |
+| NM_15_208 | Control   | Control |                     1 |  -82.40790 |  53.817188 | -52.0968788 |
+| NM_15_240 | Control   | Control |                     1 |  -74.47243 |  58.888206 |  -1.1349561 |
+| NM_15_245 | Control   | Control |                     3 | -109.39649 | -73.658139 |  15.3981372 |
+| NM_15_133 | Red       | Tomato  |                     2 |   55.06492 |  -2.200242 | -45.8084880 |
+| NM_15_156 | Red       | Tomato  |                     2 |   52.65783 |  -4.410859 | -27.5927524 |
+| NM_15_157 | Red       | Tomato  |                     2 |   31.09156 | -83.068239 | -39.0932026 |
+| NM_15_166 | Red       | Tomato  |                     2 |   50.78199 |   7.554109 | -14.4699484 |
+| NM_15_170 | Red       | Tomato  |                     2 |   52.98875 |   5.073934 | -17.8379015 |
+| NM_15_175 | Red       | Tomato  |                     2 |   51.72179 |   2.952307 |  20.9108326 |
+| NM_15_177 | Red       | Tomato  |                     2 |   51.71825 |  11.324129 |  29.2692077 |
+| NM_15_199 | Red       | Tomato  |                     2 |   55.71324 |  17.367036 |  -1.0071316 |
+| NM_15_202 | Red       | Tomato  |                     2 |   58.46517 |  16.763677 |  20.9763556 |
+| NM_15_203 | Red       | Tomato  |                     2 |   56.74781 |  18.370540 |  -0.8519130 |
+| NM_15_204 | Red       | Tomato  |                     2 |   58.60025 |  21.693585 |  15.1095420 |
+| NM_15_128 | Tangerine | Tomato  |                     2 |   46.05249 |  -5.339775 | -20.6482830 |
+| NM_15_160 | Tangerine | Tomato  |                     2 |   40.18605 | -22.694797 | -65.3355496 |
+| NM_15_192 | Tangerine | Tomato  |                     2 |   49.82164 |  -8.853585 |  23.3586725 |
+| NM_15_195 | Tangerine | Tomato  |                     2 |   45.00976 |  11.348312 |  13.2339097 |
+| NM_15_197 | Tangerine | Tomato  |                     2 |   48.00648 |   3.716988 |  11.6602536 |
+| NM_15_198 | Tangerine | Tomato  |                     2 |   52.86770 |   9.018991 |   2.9613740 |
+| NM_15_215 | Tangerine | Tomato  |                     2 |   19.10693 | -97.021529 |  69.7214376 |
+| NM_15_216 | Tangerine | Tomato  |                     2 |   49.99457 |  10.970353 |  -4.1233865 |
+| NM_15_217 | Tangerine | Tomato  |                     2 |   32.56782 | -38.181572 |  31.2699018 |
+| NM_15_225 | Tangerine | Tomato  |                     2 |   49.81869 |  16.218783 |  14.7261967 |
+| NM_15_226 | Tangerine | Tomato  |                     2 |   41.61857 |   3.378630 | -24.2685280 |
+| NM_15_242 | Tangerine | Tomato  |                     2 |   30.29431 |  -4.608642 |   0.9042711 |
 
 ### Control vs tomato, for k = 2 clusters
 
@@ -1115,41 +1115,41 @@ knitr::kable(PC_coord_noQC_Tomato_withclust[1:35, 1:7])
 
 | ID        | Class     | Tomato  | kmeans_controlredtang | kmeans_controltomato |      Dim.1 |      Dim.2 |
 |:----------|:----------|:--------|----------------------:|---------------------:|-----------:|-----------:|
-| NM_15_120 | Control   | Control |                     2 |                    1 | -106.69123 | -63.950604 |
-| NM_15_122 | Control   | Control |                     3 |                    1 |  -83.26293 |  27.295606 |
-| NM_15_136 | Control   | Control |                     2 |                    1 | -102.86240 | -15.666217 |
-| NM_15_137 | Control   | Control |                     2 |                    1 | -124.00761 | -88.237037 |
-| NM_15_159 | Control   | Control |                     3 |                    1 |  -76.63817 |  43.367786 |
-| NM_15_182 | Control   | Control |                     3 |                    1 |  -79.22179 |  22.654052 |
-| NM_15_183 | Control   | Control |                     3 |                    1 |  -79.66365 |  61.281011 |
-| NM_15_188 | Control   | Control |                     3 |                    1 |  -81.00790 |  38.273068 |
-| NM_15_189 | Control   | Control |                     3 |                    1 |  -81.26408 |  46.562943 |
-| NM_15_208 | Control   | Control |                     3 |                    1 |  -82.40790 |  53.817188 |
-| NM_15_240 | Control   | Control |                     3 |                    1 |  -74.47243 |  58.888206 |
-| NM_15_245 | Control   | Control |                     2 |                    1 | -109.39649 | -73.658139 |
-| NM_15_133 | Red       | Tomato  |                     1 |                    2 |   55.06492 |  -2.200242 |
-| NM_15_156 | Red       | Tomato  |                     1 |                    2 |   52.65783 |  -4.410859 |
-| NM_15_157 | Red       | Tomato  |                     1 |                    2 |   31.09156 | -83.068239 |
-| NM_15_166 | Red       | Tomato  |                     1 |                    2 |   50.78199 |   7.554109 |
-| NM_15_170 | Red       | Tomato  |                     1 |                    2 |   52.98875 |   5.073934 |
-| NM_15_175 | Red       | Tomato  |                     1 |                    2 |   51.72179 |   2.952307 |
-| NM_15_177 | Red       | Tomato  |                     1 |                    2 |   51.71825 |  11.324129 |
-| NM_15_199 | Red       | Tomato  |                     1 |                    2 |   55.71324 |  17.367036 |
-| NM_15_202 | Red       | Tomato  |                     1 |                    2 |   58.46517 |  16.763677 |
-| NM_15_203 | Red       | Tomato  |                     1 |                    2 |   56.74781 |  18.370540 |
-| NM_15_204 | Red       | Tomato  |                     1 |                    2 |   58.60025 |  21.693585 |
-| NM_15_128 | Tangerine | Tomato  |                     1 |                    2 |   46.05249 |  -5.339775 |
-| NM_15_160 | Tangerine | Tomato  |                     1 |                    2 |   40.18605 | -22.694797 |
-| NM_15_192 | Tangerine | Tomato  |                     1 |                    2 |   49.82164 |  -8.853585 |
-| NM_15_195 | Tangerine | Tomato  |                     1 |                    2 |   45.00976 |  11.348312 |
-| NM_15_197 | Tangerine | Tomato  |                     1 |                    2 |   48.00648 |   3.716988 |
-| NM_15_198 | Tangerine | Tomato  |                     1 |                    2 |   52.86770 |   9.018991 |
-| NM_15_215 | Tangerine | Tomato  |                     1 |                    2 |   19.10693 | -97.021529 |
-| NM_15_216 | Tangerine | Tomato  |                     1 |                    2 |   49.99457 |  10.970353 |
-| NM_15_217 | Tangerine | Tomato  |                     1 |                    2 |   32.56782 | -38.181572 |
-| NM_15_225 | Tangerine | Tomato  |                     1 |                    2 |   49.81869 |  16.218783 |
-| NM_15_226 | Tangerine | Tomato  |                     1 |                    2 |   41.61857 |   3.378630 |
-| NM_15_242 | Tangerine | Tomato  |                     1 |                    2 |   30.29431 |  -4.608642 |
+| NM_15_120 | Control   | Control |                     3 |                    1 | -106.69123 | -63.950604 |
+| NM_15_122 | Control   | Control |                     1 |                    1 |  -83.26293 |  27.295606 |
+| NM_15_136 | Control   | Control |                     3 |                    1 | -102.86240 | -15.666217 |
+| NM_15_137 | Control   | Control |                     3 |                    1 | -124.00761 | -88.237037 |
+| NM_15_159 | Control   | Control |                     1 |                    1 |  -76.63817 |  43.367786 |
+| NM_15_182 | Control   | Control |                     1 |                    1 |  -79.22179 |  22.654052 |
+| NM_15_183 | Control   | Control |                     1 |                    1 |  -79.66365 |  61.281011 |
+| NM_15_188 | Control   | Control |                     1 |                    1 |  -81.00790 |  38.273068 |
+| NM_15_189 | Control   | Control |                     1 |                    1 |  -81.26408 |  46.562943 |
+| NM_15_208 | Control   | Control |                     1 |                    1 |  -82.40790 |  53.817188 |
+| NM_15_240 | Control   | Control |                     1 |                    1 |  -74.47243 |  58.888206 |
+| NM_15_245 | Control   | Control |                     3 |                    1 | -109.39649 | -73.658139 |
+| NM_15_133 | Red       | Tomato  |                     2 |                    2 |   55.06492 |  -2.200242 |
+| NM_15_156 | Red       | Tomato  |                     2 |                    2 |   52.65783 |  -4.410859 |
+| NM_15_157 | Red       | Tomato  |                     2 |                    2 |   31.09156 | -83.068239 |
+| NM_15_166 | Red       | Tomato  |                     2 |                    2 |   50.78199 |   7.554109 |
+| NM_15_170 | Red       | Tomato  |                     2 |                    2 |   52.98875 |   5.073934 |
+| NM_15_175 | Red       | Tomato  |                     2 |                    2 |   51.72179 |   2.952307 |
+| NM_15_177 | Red       | Tomato  |                     2 |                    2 |   51.71825 |  11.324129 |
+| NM_15_199 | Red       | Tomato  |                     2 |                    2 |   55.71324 |  17.367036 |
+| NM_15_202 | Red       | Tomato  |                     2 |                    2 |   58.46517 |  16.763677 |
+| NM_15_203 | Red       | Tomato  |                     2 |                    2 |   56.74781 |  18.370540 |
+| NM_15_204 | Red       | Tomato  |                     2 |                    2 |   58.60025 |  21.693585 |
+| NM_15_128 | Tangerine | Tomato  |                     2 |                    2 |   46.05249 |  -5.339775 |
+| NM_15_160 | Tangerine | Tomato  |                     2 |                    2 |   40.18605 | -22.694797 |
+| NM_15_192 | Tangerine | Tomato  |                     2 |                    2 |   49.82164 |  -8.853585 |
+| NM_15_195 | Tangerine | Tomato  |                     2 |                    2 |   45.00976 |  11.348312 |
+| NM_15_197 | Tangerine | Tomato  |                     2 |                    2 |   48.00648 |   3.716988 |
+| NM_15_198 | Tangerine | Tomato  |                     2 |                    2 |   52.86770 |   9.018991 |
+| NM_15_215 | Tangerine | Tomato  |                     2 |                    2 |   19.10693 | -97.021529 |
+| NM_15_216 | Tangerine | Tomato  |                     2 |                    2 |   49.99457 |  10.970353 |
+| NM_15_217 | Tangerine | Tomato  |                     2 |                    2 |   32.56782 | -38.181572 |
+| NM_15_225 | Tangerine | Tomato  |                     2 |                    2 |   49.81869 |  16.218783 |
+| NM_15_226 | Tangerine | Tomato  |                     2 |                    2 |   41.61857 |   3.378630 |
+| NM_15_242 | Tangerine | Tomato  |                     2 |                    2 |   30.29431 |  -4.608642 |
 
 ### Superimpose on PCAs
 
