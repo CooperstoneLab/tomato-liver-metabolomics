@@ -27,13 +27,19 @@ library(tidyverse)
 
 ```{r, eval=F, echo=T}
 buildindex(basename="MouseRsubread_index",reference="GRCm38.p6.genome.fa")
-#Indexing allows for more efficient read alignment
+# Indexing allows for more efficient read alignment
 
-#Load our FASTQ files: 
+# Load our FASTQ files: 
 
-fastq.files.R1<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R1_001.paired.fastq.gz$", full.names = TRUE)
+fastq.files.L1R1<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R1_001.paired.fastq.gz$", full.names = TRUE)
 
-fastq.files.R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R2_001.paired.fastq.gz$", full.names = TRUE)
+fastq.files.L1R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R2_001.paired.fastq.gz$", full.names = TRUE)
+
+fastq.files.L2R1<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = "NM.*_R1_001.paired.fastq.gz$", full.names = TRUE)
+
+fastq.files.L2R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = "NM.*_R2_001.paired.fastq.gz$", full.names = TRUE)
+
+
 
 ```
 
@@ -41,7 +47,7 @@ fastq.files.R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/
 ## Let's align the reads (lane 1)
 ```{r, eval=F, echo=T}
 # Map paired-end reads:
-align(index="MouseRsubread_index",readfile1 = fastq.files.R1 ,readfile2 = fastq.files.R2 ,type = "rna", nthreads = 28)
+align(index="MouseRsubread_index",readfile1 = fastq.files.L1R1 ,readfile2 = fastq.files.L1R2 ,type = "rna", nthreads = 28)
 
 # Check parameters used in alignment: 
 args(align)
@@ -49,38 +55,36 @@ args(align)
 # Summary of proportion of read alignment: 
 Lane1bam.files <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = ".BAM$", full.names = TRUE)
 propsLane1<-propmapped(Lane1bam.files, properlyPaired=TRUE)
-
-# write out 
-write.table(props,"MousealignmentProportionsLane1Rsubread.txt", sep = "\t")
+write.table(propsLane1,"MousealignmentProportionsLane1Rsubread.txt", sep = "\t")
 ```
 
 ## Let's align the reads (lane 2)
 ```{r, eval=F, echo=T}
-#Change working directory
+# Change working directory
 setwd("/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/")
-#Make sure you copy the index you made to the Lane2 folder as well
+# Make sure you copy the index you made to the Lane2 folder as well
 
-#Map paired-end reads:
-align(index="MouseRsubread_index",readfile1 = fastq.files.R1 ,readfile2 = fastq.files.R2 ,type = "rna", nthreads = 28)
+# Map paired-end reads:
+align(index="MouseRsubread_index",readfile1 = fastq.files.L2R1 ,readfile2 = fastq.files.L2R2 ,type = "rna", nthreads = 28)
 
-#Check parameters used in alignment: 
+# Check parameters used in alignment: 
 args(align)
 
-##Summary of proportion of read alignment: 
-Lane12am.files <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = ".BAM$", full.names = TRUE)
-propsLane1<-propmapped(Lane1bam.files, properlyPaired=TRUE)
-write.table(props,"MousealignmentProportionsLane2Rsubread.txt", sep = "\t")
+## Summary of proportion of read alignment: 
+Lane2bam.files <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = ".BAM$", full.names = TRUE)
+propsLane2<-propmapped(Lane2bam.files, properlyPaired=TRUE)
+write.table(propsLane2,"MousealignmentProportionsLane2Rsubread.txt", sep = "\t")
 ```
 
 
 ### Get BAM files from lane 1
 ```{r, eval=F, echo=T}
-#Get bam files:
-#Lane 1
+# Get bam files:
+# Lane 1
 bam.filesLane1 <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*.BAM$", full.names = TRUE) 
 
 
-#Get feature counts 
+# Get feature counts 
 fcLane1 <- featureCounts(bam.filesLane1, annot.ext = "gencode.vM17.annotation.gff3.gz", 
                     isGTFAnnotationFile = TRUE, nthreads=28, isPairedEnd=TRUE, 
                     GTF.featureType = "gene")
@@ -88,7 +92,7 @@ fcLane1 <- featureCounts(bam.filesLane1, annot.ext = "gencode.vM17.annotation.gf
 annotationLane1<-(fcLane1$annotation)
 write.csv(annotationLane1, file="100918_Lane1Annotation.csv")
 
-propsLane1<-propmapped(bam.files, properlyPaired=TRUE)
+propsLane1<-propmapped(bam.filesLane1, properlyPaired=TRUE)
 write.table(propsLane1,"Lane1MousealignmentProportionsRsubread.txt", sep = "\t")
 
 # See what slots are stored in fc
@@ -98,14 +102,14 @@ names(fcLane1)
 fcLane1$stat
 annotationLane1<-(fcLane1$annotation)
 
-##Counts 
+## Counts 
 head(fcLane1$counts)
 ```
 
 
 ### Get BAM files from lane 2
 ```{r, eval=F, echo=T}
-#Lane 2 
+# Lane 2 
 
 bam.filesLane2 <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = "NM.*.BAM$", full.names = TRUE)
 
@@ -116,14 +120,14 @@ fcLane2 <- featureCounts(bam.filesLane2, annot.ext = "gencode.vM17.annotation.gf
 annotationLane2<-(fcLane2$annotation)
 write.csv(annotationLane2, file="100918_Lane2Annotation.csv")
 
-propsLane2<-propmapped(bam.files, properlyPaired=TRUE)
+propsLane2<-propmapped(bam.filesLane2, properlyPaired=TRUE)
 write.table(propsLane2,"Lane2MousealignmentProportionsRsubread.txt", sep = "\t")
 
 ## Take a look at the featurecounts stats
 fcLane2$stat
 annotationLane2<-(fcLane2$annotation)
 
-##Counts 
+## Counts 
 head(fcLane2$counts)
 ```
 

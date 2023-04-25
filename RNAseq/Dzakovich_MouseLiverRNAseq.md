@@ -81,26 +81,28 @@ buildindex(basename="MouseRsubread_index",reference="GRCm38.p6.genome.fa")
 
 #Load our FASTQ files: 
 
-fastq.files.R1<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R1_001.paired.fastq.gz$", full.names = TRUE)
+fastq.files.L1R1<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R1_001.paired.fastq.gz$", full.names = TRUE)
 
-fastq.files.R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R2_001.paired.fastq.gz$", full.names = TRUE)
+fastq.files.L1R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = "NM.*_R2_001.paired.fastq.gz$", full.names = TRUE)
+
+fastq.files.L2R1<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = "NM.*_R1_001.paired.fastq.gz$", full.names = TRUE)
+
+fastq.files.L2R2<-list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = "NM.*_R2_001.paired.fastq.gz$", full.names = TRUE)
 ```
 
 ## Let’s align the reads (lane 1)
 
 ``` r
-# Map paired-end reads:
-align(index="MouseRsubread_index",readfile1 = fastq.files.R1 ,readfile2 = fastq.files.R2 ,type = "rna", nthreads = 28)
+#Map paired-end reads:
+align(index="MouseRsubread_index",readfile1 = fastq.files.L1R1 ,readfile2 = fastq.files.L1R2 ,type = "rna", nthreads = 28)
 
-# Check parameters used in alignment: 
+#Check parameters used in alignment: 
 args(align)
 
-# Summary of proportion of read alignment: 
+##Summary of proportion of read alignment: 
 Lane1bam.files <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane1/", pattern = ".BAM$", full.names = TRUE)
 propsLane1<-propmapped(Lane1bam.files, properlyPaired=TRUE)
-
-# write out 
-write.table(props,"MousealignmentProportionsLane1Rsubread.txt", sep = "\t")
+write.table(propsLane1,"MousealignmentProportionsLane1Rsubread.txt", sep = "\t")
 ```
 
 ## Let’s align the reads (lane 2)
@@ -111,15 +113,15 @@ setwd("/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/")
 #Make sure you copy the index you made to the Lane2 folder as well
 
 #Map paired-end reads:
-align(index="MouseRsubread_index",readfile1 = fastq.files.R1 ,readfile2 = fastq.files.R2 ,type = "rna", nthreads = 28)
+align(index="MouseRsubread_index",readfile1 = fastq.files.L2R1 ,readfile2 = fastq.files.L2R2 ,type = "rna", nthreads = 28)
 
 #Check parameters used in alignment: 
 args(align)
 
 ##Summary of proportion of read alignment: 
-Lane12am.files <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = ".BAM$", full.names = TRUE)
-propsLane1<-propmapped(Lane1bam.files, properlyPaired=TRUE)
-write.table(props,"MousealignmentProportionsLane2Rsubread.txt", sep = "\t")
+Lane2bam.files <- list.files(path = "/fs/project/PAS0471/osu10028/DzakovichRNASeq/TrimmedFASTQFiles/Lane2/", pattern = ".BAM$", full.names = TRUE)
+propsLane2<-propmapped(Lane2bam.files, properlyPaired=TRUE)
+write.table(propsLane2,"MousealignmentProportionsLane2Rsubread.txt", sep = "\t")
 ```
 
 ### Get BAM files from lane 1
@@ -138,7 +140,7 @@ fcLane1 <- featureCounts(bam.filesLane1, annot.ext = "gencode.vM17.annotation.gf
 annotationLane1<-(fcLane1$annotation)
 write.csv(annotationLane1, file="100918_Lane1Annotation.csv")
 
-propsLane1<-propmapped(bam.files, properlyPaired=TRUE)
+propsLane1<-propmapped(bam.filesLane1, properlyPaired=TRUE)
 write.table(propsLane1,"Lane1MousealignmentProportionsRsubread.txt", sep = "\t")
 
 # See what slots are stored in fc
@@ -166,7 +168,7 @@ fcLane2 <- featureCounts(bam.filesLane2, annot.ext = "gencode.vM17.annotation.gf
 annotationLane2<-(fcLane2$annotation)
 write.csv(annotationLane2, file="100918_Lane2Annotation.csv")
 
-propsLane2<-propmapped(bam.files, properlyPaired=TRUE)
+propsLane2<-propmapped(bam.filesLane2, properlyPaired=TRUE)
 write.table(propsLane2,"Lane2MousealignmentProportionsRsubread.txt", sep = "\t")
 
 ## Take a look at the featurecounts stats
@@ -277,7 +279,7 @@ LaneEffectsCheck
 ![](Dzakovich_MouseLiverRNAseq_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
-#ggsave("MDS_LaneEffectCheck.png", plot=LaneEffectsCheck, dpi=800, width = 9, height = 6, units ="in", device="jpeg")
+#ggsave("MDS_LaneEffectCheck.png", plot=LaneEffectsCheck, dpi=800, width = 9, height = 6, units ="in", device="png")
 ```
 
 > In our case, we do not have an appreciable lane effects. Therefore, we
